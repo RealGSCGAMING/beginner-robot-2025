@@ -21,6 +21,7 @@ public class RobotSim {
         boolean carrying = false;
         int type;
         boolean battery = true;
+        boolean throwable = false;
 
         Scanner sc = new Scanner(System.in);
 
@@ -120,11 +121,13 @@ public class RobotSim {
                     if (type == 2)
                         System.out.println("Robot picked up a game piece.");
                     carrying = true;
-                } else if (random == 0 && carrying == true) {
+                } else if (random == 0 && carrying == true && throwable == false) {
                     carrying = false;
-                    pieces++;
+                    throwable = true;
+                    //pieces++;
                     if (type == 2)
-                        System.out.println("Robot scored the game piece.");
+                        System.out.println("Robot scored the game piece.\nType T to throw it.");
+
                 }
             }
 
@@ -147,10 +150,29 @@ public class RobotSim {
                 System.out.println(moving ? "Moving " + directionWord(direction) : "Not moving");
                 System.out.println(carrying ? "Holding game piece" : "Not holding anything");
                 System.out.println("Battery level: " + batteryLevel);
+                if (throwable) System.out.println("\nThere is a game piece waiting to be thrown! Type T to throw it.");
                 System.out.println("\n[Press ENTER to advance simulation, or type Q to quit]");
 
-                if (sc.nextLine().toLowerCase().equals("q")) {
+                String a = sc.nextLine();
+
+                if (a.toLowerCase().equals("q")) {
                     break;
+                }
+
+                else if (a.toLowerCase().equals("t") && throwable) {
+                    System.out.println("\nYou threw the game piece...");
+                    if ((int) (Math.random() * 2) == 1) {
+                        System.out.println("You scored!");
+                        pieces++;
+                        System.out.println("New score: " + pieces);
+                    }
+                    else {
+                        System.out.println("You missed.");
+                    }
+
+                    throwable = false;
+                    System.out.println("[Press ENTER to advance simulation, or type Q to quit]");
+                    sc.nextLine();
                 }
             }
 
