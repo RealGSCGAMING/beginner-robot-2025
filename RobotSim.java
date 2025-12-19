@@ -127,7 +127,6 @@ public class RobotSim {
                     //pieces++;
                     if (type == 2)
                         System.out.println("Robot scored the game piece.\nType T to throw it.");
-
                 }
             }
 
